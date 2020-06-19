@@ -30,4 +30,4 @@ jobs:
         python -m pip install --upgrade pip
     - name: Generate Documentation.md
       run: |
-        py Documentation/gen.py
+        Documentation/gen.py
