@@ -30,4 +30,4 @@ jobs:
         python -m pip install --upgrade pip
     - name: Generate Documentation.md
       run: |
-        python -c "import sys; import os; print(sys.version); print(os.system("ls"));"
+        python -c "import sys; import os; print(sys.version); print(os.listdir());"
