@@ -28,7 +28,7 @@ jobs:
    
   gen_doc:
     runs-on: ubuntu-latest
-    need: check_doc_changes
+    needs: check_doc_changes
     if: ${{ needs.check_doc_changes.outputs.source_files }}
     strategy:
       matrix:
