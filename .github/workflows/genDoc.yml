@@ -33,7 +33,7 @@ jobs:
         python -m pip install --upgrade pip
     - name: Generate Documentation.md
       run: |
-        python -c "import sys; import os; print(sys.version); print(os.listdir()); file = open(\"doc.txt\", \"w\"); file.write(\"hi\");  file.close();"
+        python -c "import sys; import os; print(sys.version); print(os.listdir()); file = open(\"doc.txt\", \"a\"); file.write(\"hi there\");  file.close();"
         
     - name: Commit
       run: |
