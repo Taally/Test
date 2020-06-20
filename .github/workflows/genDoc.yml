@@ -20,7 +20,10 @@ jobs:
         python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
+      with:
+        persist-credentials: false
+        fetch-depth: 0
     - name: Set up Python 3.x
       uses: actions/setup-python@v2
       with:
@@ -31,3 +34,14 @@ jobs:
     - name: Generate Documentation.md
       run: |
         python -c "import sys; import os; print(sys.version); print(os.listdir()); file = open(\"doc.txt\", \"w\"); file.write(\"hi\");  file.close();"
+        
+    - name: Commit
+      run: |
+        git config --local user.email "shkuro_tanya@mail.ru"
+        git config --local user.name "Taally"
+        git commit -m "Change file" -a
+    
+    - name: Push changes?
+      uses: ad-m/github-push-action@master
+      with: 
+        github_token: ${{ secrets.GITHUB_TOKEN }}
