@@ -1,9 +1,9 @@
 import codecs
 
-def gen_toc(order):
+def gen_toc(path,order):
     toc = "" # table of content
     for i, name in enumerate(order):
-        file = codecs.open(name+".md", "r", "utf_8_sig")
+        file = codecs.open(path+name+".md", "r", "utf_8_sig")
         title = file.readline()
         if (len(title) < 3):
             title = file.readline()
@@ -19,7 +19,7 @@ def main():
     with open(path+"order.txt", "r") as order_file:
         for line in order_file:
             order.append(line.strip())
-    toc = gen_toc(order)
+    toc = gen_toc(path,order)
 
     res = codecs.open(path+"Documentation.md", "w", "utf_8_sig")
     res.write(toc)
