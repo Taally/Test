@@ -33,7 +33,7 @@ jobs:
         python -m pip install --upgrade pip
     - name: Generate Documentation.md
       run: |
-        python -c Documentation/gen.py
+        python Documentation/gen.py
         
     - name: Commit
       run: |
