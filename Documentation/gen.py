@@ -14,17 +14,18 @@ def gen_toc(order):
     return toc
 
 def main():
+    path="Documentation/"
     order = []
-    with open("order.txt", "r") as order_file:
+    with open(path+"order.txt", "r") as order_file:
         for line in order_file:
             order.append(line.strip())
     toc = gen_toc(order)
 
-    res = codecs.open("Documentation.md", "w", "utf_8_sig")
+    res = codecs.open(path+"Documentation.md", "w", "utf_8_sig")
     res.write(toc)
     res.write("\n")
     for name in order:
-        file = codecs.open(name+".md", "r", "utf_8_sig")
+        file = codecs.open(path+name+".md", "r", "utf_8_sig")
         content = "\n<a name=\""+name[2:]+"\"/>\n\n"
         content += file.read()
         file.close()
