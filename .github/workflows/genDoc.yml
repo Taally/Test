@@ -37,8 +37,8 @@ jobs:
         
     - name: Commit
       run: |
-        git config --local user.email "shkuro_tanya@mail.ru"
-        git config --local user.name "Taally"
+        git config --local user.email "action@github.com"
+        git config --local user.name "Github Action"
         git commit -m "Change file" -a
     
     - name: Push changes?
