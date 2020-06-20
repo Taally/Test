@@ -22,7 +22,7 @@ jobs:
        id: check_doc_changes
        run: |
          git fetch -u origin master:master
-         source_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
+         source_files="$(git diff --name-only master | grep '\.md\|\.txt')"
          echo "::set-output name=source_files::$source_files"
    
    
