@@ -23,7 +23,7 @@ jobs:
        run: |
          git fetch -u origin master:master
          source_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
-         echo "::set-output name=source_files::$source_files
+         echo "::set-output name=source_files::$source_files"
    
    
   gen_doc:
