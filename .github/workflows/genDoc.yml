@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: GEN_DOC
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -22,7 +22,7 @@ jobs:
        id: check_doc_changes
        run: |
          git fetch -u origin master:master
-         source_files="$(git diff --name-only master | grep '\.md\|\.txt')"
+         source_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
          echo "::set-output name=source_files::$source_files"
    
    
