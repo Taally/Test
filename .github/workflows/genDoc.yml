@@ -12,9 +12,24 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
-
+  check_doc_changes:
+   runs-on: ubuntu-latest
+   outputs:
+     source_files: ${{ steps.check_doc_changes.outputs.source_files }}
+   steps:
+     - uses: actions/checkout@v2
+     - name: Check if doc files were changed
+       id: check_doc_changes
+       run: |
+         git fetch -u origin master:master
+         source_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
+         echo "::set-output name=source_files::$source_files
+   
+   
+  gen_doc:
     runs-on: ubuntu-latest
+    need: check_doc_changes
+    if: ${{ needs.check_doc_changes.outputs.source_files }}
     strategy:
       matrix:
         python-version: [3.7]
