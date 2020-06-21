@@ -22,10 +22,9 @@ jobs:
        id: check_doc_changes
        run: |
          git fetch -u origin master:master
-         doc_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
-         echo "::set-output name=doc_files::$doc_files"
          git diff --name-only master
-   
+         #doc_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
+         #echo "::set-output name=doc_files::$doc_files"   
    
   gen_doc:
     runs-on: ubuntu-latest
