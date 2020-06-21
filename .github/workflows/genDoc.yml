@@ -5,6 +5,8 @@ name: GEN_DOC
 on:
   pull_request:
     branches: [ master ]
+  push:
+    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -13,13 +15,22 @@ jobs:
    outputs:
      doc_files: ${{ steps.check_doc_changes.outputs.doc_files }}
    steps:
+     - if: github.event == pull_request
      - uses: actions/checkout@v2
      - name: Check if doc files were changed
-       id: check_doc_changes
+       id: check_doc_changes_on_pr
        run: |
          git fetch -u origin master:master
          doc_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
-         echo "::set-output name=doc_files::$doc_files"   
+         echo "::set-output name=doc_files::$doc_files"
+     - if: github.event == push
+     - uses: actions/checkout@v2
+     - name: Check if doc files were changed
+       id: check_doc_changes_on_push
+       run: |
+         git fetch -u origin master:master
+         doc_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
+         echo "::set-output name=doc_files::$doc_files"
    
   gen_doc:
     runs-on: ubuntu-latest
@@ -43,12 +54,14 @@ jobs:
         python Documentation/gen.py
         
     - name: Commit
+    - if: github.event == push
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "Github Action"
         git commit -m "Change file" -a
     
     - name: Push changes
+    - if: github.event == push
       uses: ad-m/github-push-action@master
       with: 
         github_token: ${{ secrets.GITHUB_TOKEN }}
