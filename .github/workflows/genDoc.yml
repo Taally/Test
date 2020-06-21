@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: GEN_DOC
 
 # Controls when the action will run. Triggers the workflow on push or pull request
@@ -22,7 +20,6 @@ jobs:
        id: check_doc_changes
        run: |
          git fetch -u origin master:master
-         git --no-pager diff --name-only master
          doc_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
          echo "::set-output name=doc_files::$doc_files"   
    
@@ -30,12 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: check_doc_changes
     if: ${{ needs.check_doc_changes.outputs.doc_files }}
-    strategy:
-      matrix:
-        python-version: [3.7]
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
       with:
         persist-credentials: false
         fetch-depth: 0
@@ -56,7 +50,7 @@ jobs:
         git config --local user.name "Github Action"
         git commit -m "Change file" -a
     
-    - name: Push changes?
+    - name: Push changes
       uses: ad-m/github-push-action@master
       with: 
         github_token: ${{ secrets.GITHUB_TOKEN }}
