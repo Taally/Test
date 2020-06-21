@@ -21,10 +21,10 @@ jobs:
      - name: Check if doc files were changed
        id: check_doc_changes
        run: |
-         #git fetch -u origin master:master
-         git diff --name-only master
-         #doc_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
-         #echo "::set-output name=doc_files::$doc_files"   
+         git fetch -u origin master:master
+         git --no-pager diff --name-only master
+         doc_files="$(git diff --name-only master | grep '\.md\|\.txt' || true)"
+         echo "::set-output name=doc_files::$doc_files"   
    
   gen_doc:
     runs-on: ubuntu-latest
